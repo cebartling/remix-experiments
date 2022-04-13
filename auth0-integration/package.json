@@ -6,7 +6,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev",
+    "dev": "PORT=3001 remix dev",
     "start": "remix-serve build",
     "start-json-server": "json-server --watch db.json"
   },

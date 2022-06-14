@@ -35,7 +35,7 @@
     "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.4.7",
     "concurrently": "^7.2.1",
-    "eslint": "^8.11.0",
+    "eslint": "^8.17.0",
     "json-server": "^0.17.0",
     "postcss": "^8.4.14",
     "prettier": "^2.6.2",

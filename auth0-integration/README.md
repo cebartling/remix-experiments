@@ -4,13 +4,15 @@
 
 ## Development
 
-From your terminal:
+1. Set the environment variables specified in the `.env.template` in a new `.env` file. 
+The `.env` file is git-ignored, so your Auth0 secrets won't get exposed.
+2. From your terminal:
+    
+    ```sh
+    npm run dev
+    ```
 
-```sh
-npm run dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
+    This starts your app in development mode, rebuilding assets on file changes.
 
 ## Deployment
 

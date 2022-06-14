@@ -1,5 +1,5 @@
 import { Authenticator } from 'remix-auth';
-import { Auth0Strategy } from 'remix-auth-auth0';
+import { Auth0ExtraParams, Auth0Profile, Auth0Strategy } from 'remix-auth-auth0';
 import { randomUUID } from 'crypto';
 
 import { sessionStorage } from '~/services/session.server';
@@ -8,6 +8,13 @@ import type { User } from '~/types/user';
 // Create an instance of the authenticator, pass a generic with what
 // strategies will return and will store in the session
 export let authenticator = new Authenticator<User>(sessionStorage);
+
+type Auth0CallbackParams = {
+  accessToken: string;
+  refreshToken: string;
+  extraParams: Auth0ExtraParams;
+  profile: Auth0Profile;
+};
 
 let auth0Strategy = new Auth0Strategy(
   {
@@ -18,6 +25,7 @@ let auth0Strategy = new Auth0Strategy(
   },
   async ({ accessToken, refreshToken, extraParams, profile }) => {
     // Get the user data from your DB or API using the tokens and profile
+
     return {
       id: randomUUID(),
       email: profile.emails[0].value,

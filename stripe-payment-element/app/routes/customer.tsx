@@ -27,7 +27,7 @@ export default function Customer() {
   const data = useActionData();
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.4' }}>
+    <div>
       <h1>Customer</h1>
       const data = useActionData(); return (
       <ValidatedForm validator={validator} method="post">

@@ -1,7 +1,11 @@
+import { Heading } from '~/components/Heading';
+import { Link } from '@remix-run/react';
+
 export default function Index() {
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.4' }}>
-      <h1>Stripe Payment Element demo</h1>
+    <div>
+      <Heading text="Stripe Payment Element demo" />
+      <Link to="/customer">Create a new customer</Link>
     </div>
   );
 }

@@ -1,7 +1,13 @@
+import AuthenticatedHeader from '~/components/AuthenticatedHeader';
+import HeaderBanner from '~/components/HeaderBanner';
+import Modal from '~/components/Modal';
+
 export default function Dashboard() {
   return (
-    <div className="main-container">
-      <h1>Dashboard</h1>
-    </div>
+    <>
+      <HeaderBanner />
+      <AuthenticatedHeader />
+      <Modal />
+    </>
   );
 }

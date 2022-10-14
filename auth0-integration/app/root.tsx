@@ -7,26 +7,17 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import styles from '~/../styles/app.css';
+import styles from '~/styles/app.css';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'New Remix App',
+  title: 'Remix/Auth0 example',
   viewport: 'width=device-width,initial-scale=1',
 });
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }];
 }
-
-// export const loader: LoaderFunction = async () => {
-//   console.info('Running the root loader function');
-//   return json({
-//     ENV: {
-//       FOOBAR: process.env.FOOBAR,
-//     },
-//   });
-// }
 
 export default function App() {
   return (

@@ -7,6 +7,7 @@ import { ValidatedForm, validationError } from 'remix-validated-form';
 import { FormInput } from '~/components/FormInput';
 import { SubmitButton } from '~/components/SubmitButton';
 import { Alert } from '~/components/Alert';
+import { Heading } from '~/components/Heading';
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json({});
@@ -28,9 +29,8 @@ export default function Customer() {
 
   return (
     <div>
-      <h1>Customer</h1>
-      const data = useActionData(); return (
-      <ValidatedForm validator={validator} method="post">
+      <Heading text="New customer" />
+      <ValidatedForm validator={validator} method="post" className="form">
         <FormInput name="firstName" label="First Name" />
         <FormInput name="lastName" label="Last Name" />
         <FormInput name="email" label="Email" />
@@ -39,7 +39,6 @@ export default function Customer() {
         )}
         <SubmitButton />
       </ValidatedForm>
-      );
     </div>
   );
 }

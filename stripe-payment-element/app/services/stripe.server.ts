@@ -19,30 +19,27 @@ export const createCustomer = async ({
 }: CreateCustomerParams) => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
-  return await stripe.customers.create(
-    {
-      email,
-      name,
-      shipping: {
-        address: {
-          city,
-          country: 'US',
-          line1: addressLine1,
-          postal_code: postalCode,
-          state
-        },
-        name
-      },
+  return await stripe.customers.create({
+    email,
+    name,
+    shipping: {
       address: {
         city,
         country: 'US',
         line1: addressLine1,
         postal_code: postalCode,
         state
-      }
-    } as Stripe.CustomerCreateParams,
-    {} as Stripe.RequestOptions
-  );
+      },
+      name
+    },
+    address: {
+      city,
+      country: 'US',
+      line1: addressLine1,
+      postal_code: postalCode,
+      state
+    }
+  } as Stripe.CustomerCreateParams);
 };
 
 export interface CreateSubscriptionParams {

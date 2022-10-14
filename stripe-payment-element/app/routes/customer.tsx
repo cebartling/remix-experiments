@@ -4,15 +4,16 @@ import { useActionData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
 import { z } from 'zod';
 import { ValidatedForm, validationError } from 'remix-validated-form';
+import type Stripe from 'stripe';
 import { FormInput } from '~/components/FormInput';
 import { SubmitButton } from '~/components/SubmitButton';
-import { Alert } from '~/components/Alert';
 import { Heading } from '~/components/Heading';
 import type {
   CreateCustomerParams,
   CreateSubscriptionParams
 } from '~/services/stripe.server';
 import { createCustomer, createSubscription } from '~/services/stripe.server';
+import { getSessionData, sessionCookie } from '~/cookies';
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json({});
@@ -36,7 +37,7 @@ export default function Customer() {
   const data = useActionData();
 
   return (
-    <div>
+    <>
       <Heading text="New customer" />
       <ValidatedForm validator={validator} method="post" className="form">
         <FormInput name="name" label="Full name" />
@@ -45,21 +46,19 @@ export default function Customer() {
         <FormInput name="city" label="City" />
         <FormInput name="state" label="State" />
         <FormInput name="postalCode" label="Postal code" />
-        {data && (
-          <Alert variant="info" title={data.title} details={data.description} />
-        )}
         <SubmitButton />
       </ValidatedForm>
-    </div>
+    </>
   );
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  const sessionData = await getSessionData(request);
   const validatedFormData = await validator.validate(await request.formData());
   if (validatedFormData.error) return validationError(validatedFormData.error);
+
   const { name, email, city, addressLine1, state, postalCode } =
     validatedFormData.data;
-
   const stripeCustomer = await createCustomer({
     name,
     email,
@@ -71,6 +70,15 @@ export const action: ActionFunction = async ({ request }) => {
   const stripeSubscription = await createSubscription({
     stripeCustomerId: stripeCustomer.id
   } as CreateSubscriptionParams);
+  const latestInvoice = stripeSubscription.latest_invoice as Stripe.Invoice;
+  const paymentIntent = latestInvoice?.payment_intent as Stripe.PaymentIntent;
+  sessionData.stripeClientSecret = paymentIntent?.client_secret!;
+  sessionData.postalCode = postalCode;
+  sessionData.stripeSubscriptionId = stripeSubscription.id;
 
-  return redirect('/payment-capture');
+  return redirect('/payment-capture', {
+    headers: {
+      'Set-Cookie': await sessionCookie.serialize(sessionData)
+    }
+  });
 };

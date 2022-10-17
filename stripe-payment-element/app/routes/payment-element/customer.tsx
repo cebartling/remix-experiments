@@ -47,7 +47,9 @@ export default function Customer() {
         <FormInput name="city" label="City" />
         <FormInput name="state" label="State" />
         <FormInput name="postalCode" label="Postal code" />
-        <SubmitButton />
+        <div className="customer-form-button-container">
+          <SubmitButton />
+        </div>
       </ValidatedForm>
     </>
   );

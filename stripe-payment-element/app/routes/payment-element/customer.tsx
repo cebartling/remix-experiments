@@ -16,10 +16,6 @@ import { createCustomer, createSubscription } from '~/services/stripe.server';
 import { getSessionData, sessionCookie } from '~/cookies';
 import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE } from '~/route-constants';
 
-// export const loader: LoaderFunction = async ({ request }) => {
-//   return json({});
-// };
-
 export const validator = withZod(
   z.object({
     name: z.string().min(1, { message: 'Name is required' }),
@@ -59,9 +55,10 @@ export const action: ActionFunction = async ({ request }) => {
   const sessionData = await getSessionData(request);
   const validatedFormData = await validator.validate(await request.formData());
   if (validatedFormData.error) return validationError(validatedFormData.error);
-
   const { name, email, city, addressLine1, state, postalCode } =
     validatedFormData.data;
+
+  // Create the Stripe customer
   const stripeCustomer = await createCustomer({
     name,
     email,
@@ -71,9 +68,12 @@ export const action: ActionFunction = async ({ request }) => {
     postalCode
   } as CreateCustomerParams);
 
+  // Create an incomplete subscription
   const stripeSubscription = await createSubscription({
-    stripeCustomerId: stripeCustomer.id
+    stripeCustomerId: stripeCustomer.id,
+    stripePriceId: process.env.STRIPE_STANDARD_SERVICE_PRICE_ID
   } as CreateSubscriptionParams);
+
   const latestInvoice = stripeSubscription.latest_invoice as Stripe.Invoice;
   const paymentIntent = latestInvoice?.payment_intent as Stripe.PaymentIntent;
   sessionData.stripeClientSecret = paymentIntent?.client_secret!;

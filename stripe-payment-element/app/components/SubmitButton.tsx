@@ -4,7 +4,7 @@ export const SubmitButton = () => {
   const isSubmitting = useIsSubmitting();
 
   return (
-    <button type="submit" disabled={isSubmitting} className="btn btn-blue">
+    <button type="submit" disabled={isSubmitting} className="submit-button">
       {isSubmitting ? 'Submitting...' : 'Submit'}
     </button>
   );

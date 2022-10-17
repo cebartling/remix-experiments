@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import type { StripePaymentElementOptions } from '@stripe/stripe-js';
+import type {
+  DefaultValuesOption,
+  FieldsOption,
+  StripePaymentElementOptions
+} from '@stripe/stripe-js';
 import {
   PaymentElement,
   useElements,
@@ -7,14 +11,13 @@ import {
 } from '@stripe/react-stripe-js';
 
 type StripePaymentDetailsProps = {
-  stripePriceId: string;
   paymentCatureStatusUrl: string;
-  paymentElementOptions: StripePaymentElementOptions;
+  postalCode: string;
 };
 
 export default function StripePaymentDetails({
   paymentCatureStatusUrl,
-  paymentElementOptions
+  postalCode
 }: StripePaymentDetailsProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -57,6 +60,21 @@ export default function StripePaymentDetails({
     setIsLoading(false);
   };
 
+  const paymentElementOptions = {
+    defaultValues: {
+      billingDetails: {
+        address: { postalCode }
+      }
+    } as DefaultValuesOption,
+    fields: {
+      billingDetails: {
+        name: 'auto',
+        address: { postalCode: 'auto', country: 'never' }
+      }
+    } as FieldsOption
+    // wallets: { applePay: 'auto', googlePay: 'auto' } as WalletsOption
+  } as StripePaymentElementOptions;
+
   return (
     <div className="fixed-width">
       <form id="payment-form" onSubmit={handleSubmit}>
@@ -72,9 +90,7 @@ export default function StripePaymentDetails({
             id="submit"
             className="subscribe-button"
           >
-            {/*<span id="button-text">*/}
-            {isLoading ? 'Submitting payment information...' : 'Subscribe'}
-            {/*</span>*/}
+            {isLoading ? 'Submitting payment information...' : 'Submit'}
           </button>
         </div>
         <div className="error-message">

@@ -44,10 +44,12 @@ export const createCustomer = async ({
 
 export interface CreateSubscriptionParams {
   stripeCustomerId: string;
+  stripePriceId: string;
 }
 
 export const createSubscription = async ({
-  stripeCustomerId
+  stripeCustomerId,
+  stripePriceId
 }: CreateSubscriptionParams) => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
@@ -55,7 +57,7 @@ export const createSubscription = async ({
     customer: stripeCustomerId,
     items: [
       {
-        price: process.env.STRIPE_STANDARD_SERVICE_PRICE_ID
+        price: stripePriceId
       }
     ],
     payment_behavior: 'default_incomplete',

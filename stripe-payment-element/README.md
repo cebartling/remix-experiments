@@ -12,7 +12,7 @@ This web application demonstrates using Stripe with Remix!
 
 ### Development
 
-1. Create a product and price in your Stripe test mode environment.
+1. Create a product and price in your Stripe test mode environment. Take note of the price ID.
 1. Create the `.env` file in the project root directory and set the following environment variable values:
     ```dotenv
     STRIPE_PUBLISHABLE_KEY=<Stripe publishable key>
@@ -20,12 +20,11 @@ This web application demonstrates using Stripe with Remix!
     STRIPE_STANDARD_SERVICE_PRICE_ID=<Stripe price id for standard service product>
     BASE_URL=http://localhost:3000
    ```
+1. Start the Remix dev server. From your terminal:
 
-From your terminal:
-
-```sh
-npm run dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
-
+    ```sh
+    npm run dev
+    ```
+    
+    This starts your app in development mode, rebuilding assets on file changes.
+    

@@ -58,7 +58,11 @@
         @apply text-sm text-black font-medium mt-1;
     }
 
-    .submit-button {
+    .primary-link {
+        @apply p-4 text-center bg-blue-600 text-white font-semibold rounded-md;
+    }
+
+    .primary-button {
         @apply bg-blue-600 text-white px-5 py-2 my-6 font-semibold leading-5 w-full h-14 rounded-md;
     }
 }

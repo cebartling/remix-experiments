@@ -6,7 +6,7 @@ export default function Index() {
   return (
     <>
       <Heading text="Stripe subscription demos" />
-      <Link className="btn btn-blue" to={ROUTE_PAYMENT_ELEMENT_CUSTOMER}>
+      <Link className="primary-link mt-4" to={ROUTE_PAYMENT_ELEMENT_CUSTOMER}>
         Create subscription using Payment Element
       </Link>
     </>

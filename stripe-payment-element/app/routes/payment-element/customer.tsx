@@ -1,5 +1,5 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
+import type { ActionFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import { useActionData } from '@remix-run/react';
 import { withZod } from '@remix-validated-form/with-zod';
 import { z } from 'zod';
@@ -14,10 +14,11 @@ import type {
 } from '~/services/stripe.server';
 import { createCustomer, createSubscription } from '~/services/stripe.server';
 import { getSessionData, sessionCookie } from '~/cookies';
+import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE } from '~/route-constants';
 
-export const loader: LoaderFunction = async ({ request }) => {
-  return json({});
-};
+// export const loader: LoaderFunction = async ({ request }) => {
+//   return json({});
+// };
 
 export const validator = withZod(
   z.object({
@@ -67,6 +68,7 @@ export const action: ActionFunction = async ({ request }) => {
     state,
     postalCode
   } as CreateCustomerParams);
+
   const stripeSubscription = await createSubscription({
     stripeCustomerId: stripeCustomer.id
   } as CreateSubscriptionParams);
@@ -76,7 +78,7 @@ export const action: ActionFunction = async ({ request }) => {
   sessionData.postalCode = postalCode;
   sessionData.stripeSubscriptionId = stripeSubscription.id;
 
-  return redirect('/payment-capture', {
+  return redirect(ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE, {
     headers: {
       'Set-Cookie': await sessionCookie.serialize(sessionData)
     }

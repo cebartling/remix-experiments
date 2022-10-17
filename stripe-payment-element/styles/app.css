@@ -5,13 +5,17 @@
 @layer components {
 
     .fixed-width {
-        width: 22rem;
+        width: 40rem;
         min-width: 22rem;
-        max-width: 22rem;
+        max-width: 40rem;
     }
 
     .main-container {
-        @apply fixed-width text-center;
+        @apply flex justify-center;
+    }
+
+    .main-container-layout {
+        @apply flex flex-col items-center fixed-width;
     }
 
     .btn {
@@ -27,7 +31,7 @@
     }
 
     .form {
-        @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4;
+        @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full;
     }
 
     .form-input-container {

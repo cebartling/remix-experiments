@@ -8,12 +8,12 @@ import {
 
 type StripePaymentDetailsProps = {
   stripePriceId: string;
-  paymentSuccessUrl: string;
+  paymentCatureStatusUrl: string;
   paymentElementOptions: StripePaymentElementOptions;
 };
 
 export default function StripePaymentDetails({
-  paymentSuccessUrl,
+  paymentCatureStatusUrl,
   paymentElementOptions
 }: StripePaymentDetailsProps) {
   const stripe = useStripe();
@@ -38,7 +38,7 @@ export default function StripePaymentDetails({
         payment_method_data: {
           billing_details: { address: { country: 'us' } }
         },
-        return_url: paymentSuccessUrl
+        return_url: paymentCatureStatusUrl
       }
     });
     console.log('====> Handle submit', error);

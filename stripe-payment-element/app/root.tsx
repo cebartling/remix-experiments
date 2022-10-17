@@ -28,7 +28,9 @@ export default function App() {
       </head>
       <body>
         <div className="main-container">
-          <Outlet />
+          <div className="main-container-layout">
+            <Outlet />
+          </div>
         </div>
         <ScrollRestoration />
         <Scripts />

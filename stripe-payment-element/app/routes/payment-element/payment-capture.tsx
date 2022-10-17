@@ -7,11 +7,11 @@ import StripePaymentDetails from '~/components/StripePaymentDetails';
 import type {
   DefaultValuesOption,
   FieldsOption,
-  StripePaymentElementOptions,
-  WalletsOption
+  StripePaymentElementOptions
 } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE_STATUS } from '~/route-constants';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const sessionData = await getSessionData(request);
@@ -23,7 +23,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
       STRIPE_STANDARD_SERVICE_PRICE_ID:
         process.env.STRIPE_STANDARD_SERVICE_PRICE_ID,
-      PAYMENT_SUCCESS_URL: `http://localhost:3000/payment-success`
+      PAYMENT_CAPTURE_STATUS_URL: `${process.env.BASE_URL}${ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE_STATUS}`
     },
     sessionData
   });
@@ -45,8 +45,8 @@ export default function PaymentCapture() {
         name: 'auto',
         address: { postalCode: 'auto', country: 'never' }
       }
-    } as FieldsOption,
-    wallets: { applePay: 'auto', googlePay: 'auto' } as WalletsOption
+    } as FieldsOption
+    // wallets: { applePay: 'auto', googlePay: 'auto' } as WalletsOption
   } as StripePaymentElementOptions;
 
   return (
@@ -55,7 +55,7 @@ export default function PaymentCapture() {
       <Elements stripe={stripePromise} options={options}>
         <StripePaymentDetails
           paymentElementOptions={paymentElementOptions}
-          paymentSuccessUrl={ENV.PAYMENT_SUCCESS_URL}
+          paymentCatureStatusUrl={ENV.PAYMENT_CAPTURE_STATUS_URL}
           stripePriceId={ENV.STRIPE_STANDARD_SERVICE_PRICE_ID}
         />
       </Elements>

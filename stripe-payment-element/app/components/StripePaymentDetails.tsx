@@ -35,7 +35,7 @@ export default function StripePaymentDetails({
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmSetup({
+    const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         payment_method_data: {

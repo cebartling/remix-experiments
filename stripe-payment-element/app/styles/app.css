@@ -628,12 +628,12 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.mt-4 {
-  margin-top: 1rem;
-}
-
 .mt-3 {
   margin-top: 0.75rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .text-3xl {

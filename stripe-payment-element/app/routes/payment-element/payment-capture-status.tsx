@@ -8,9 +8,10 @@ import { useLoaderData } from '@remix-run/react';
 export const loader: LoaderFunction = async ({ request }) => {
   // Retrieve the "setup_intent_client_secret" query parameter appended to
   // your return_url by Stripe.js
-  const stripePaymentIntentClientSecret = new URLSearchParams(
-    window.location.search
-  ).get('payment_intent_client_secret');
+  const url = new URL(request.url);
+  const stripePaymentIntentClientSecret = url.searchParams.get(
+    'payment_intent_client_secret'
+  );
   console.log('===> Client secret', stripePaymentIntentClientSecret);
 
   return json({

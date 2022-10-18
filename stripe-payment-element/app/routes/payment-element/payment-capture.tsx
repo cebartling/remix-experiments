@@ -3,7 +3,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { Heading } from '~/components/Heading';
 import { getSessionData } from '~/cookies';
-import StripePaymentDetails from '~/components/StripePaymentDetails';
+import StripePaymentCapture from '~/components/StripePaymentCapture';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE_STATUS } from '~/route-constants';
@@ -31,7 +31,7 @@ export default function PaymentCapture() {
     <>
       <Heading text="Payment method" />
       <Elements stripe={stripePromise} options={options}>
-        <StripePaymentDetails
+        <StripePaymentCapture
           paymentCatureStatusUrl={ENV.PAYMENT_CAPTURE_STATUS_URL}
           postalCode={sessionData.postalCode}
         />

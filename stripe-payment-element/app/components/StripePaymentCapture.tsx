@@ -15,7 +15,7 @@ type StripePaymentDetailsProps = {
   postalCode: string;
 };
 
-export default function StripePaymentDetails({
+export default function StripePaymentCapture({
   paymentCatureStatusUrl,
   postalCode
 }: StripePaymentDetailsProps) {

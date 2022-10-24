@@ -628,6 +628,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.ml-8 {
+  margin-left: 2rem;
+}
+
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -638,10 +642,6 @@ video {
 
 .-mr-1 {
   margin-right: -0.25rem;
-}
-
-.ml-8 {
-  margin-left: 2rem;
 }
 
 .block {

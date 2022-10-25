@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js';
+import SignIntoGoogleButton from '~/components/SignIntoGoogleButton';
 
 interface CreateAccountFormProps {
   auth0Domain: string;
@@ -37,12 +38,9 @@ export default function CreateAccountForm({
             You want to give us money, right?!!
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            <button
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            <SignIntoGoogleButton
               onClick={handleOnClickSignInWithGoogleButton}
-            >
-              Sign in with Google
-            </button>
+            />
           </p>
         </div>
       </div>

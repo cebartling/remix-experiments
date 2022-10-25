@@ -5,3 +5,7 @@
 .main-container {
     @apply flex flex-col;
 }
+
+.sign-into-google-button {
+    @apply ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-indigo-700;
+}

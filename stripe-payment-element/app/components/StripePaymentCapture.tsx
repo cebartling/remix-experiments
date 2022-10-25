@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import type { SetStateAction } from 'react';
+import { ChangeEvent, useState } from 'react';
 import type {
   DefaultValuesOption,
   FieldsOption,
@@ -22,7 +23,15 @@ export default function StripePaymentCapture({
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState<string | null>(null);
+  const [promoCode, setPromoCode] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  function handleChangePromoCode(event: {
+    target: { value: SetStateAction<string | null> };
+  }) {
+    console.log('Promo code value', event.target.value);
+    setPromoCode(event.target.value);
+  }
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -84,11 +93,23 @@ export default function StripePaymentCapture({
             options={paymentElementOptions}
           />
         </div>
+        <div className="form-input-container mt-2">
+          <label htmlFor="promoCode" className="form-label">
+            Promo code
+          </label>
+          <input
+            id="promoCode"
+            name="promoCode"
+            placeholder="e.g. PROMO2022"
+            className="form-input"
+            onChange={handleChangePromoCode}
+          />
+        </div>
         <div>
           <button
             disabled={isLoading || !stripe || !elements}
             id="submit"
-            className="subscribe-button"
+            className="primary-button"
           >
             {isLoading ? 'Submitting payment information...' : 'Submit'}
           </button>

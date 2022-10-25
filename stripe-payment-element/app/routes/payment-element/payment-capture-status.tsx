@@ -13,7 +13,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const stripePaymentIntentClientSecret = url.searchParams.get(
     'payment_intent_client_secret'
   );
-  console.log('===> Client secret', stripePaymentIntentClientSecret);
 
   return json({
     ENV: {

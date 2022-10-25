@@ -1,3 +1,4 @@
+import type { ParseHashOptions } from 'auth0-js';
 import auth0 from 'auth0-js';
 import SignIntoGoogleButton from '~/components/SignIntoGoogleButton';
 
@@ -12,16 +13,33 @@ export default function CreateAccountForm({
   auth0ClientId,
   redirectUri,
 }: CreateAccountFormProps) {
-  function handleOnClickSignInWithGoogleButton() {
-    const webAuth = new auth0.WebAuth({
-      domain: auth0Domain,
-      clientID: auth0ClientId,
-    });
+  const webAuth = new auth0.WebAuth({
+    domain: auth0Domain,
+    clientID: auth0ClientId,
+  });
 
+  try {
+    webAuth.parseHash(
+      { hash: window.location.hash } as ParseHashOptions,
+      function (err, authResult) {
+        if (err) {
+          return console.log(err);
+        }
+        webAuth.client.userInfo(authResult?.accessToken!, function (err, user) {
+          // This method will make a request to the /userinfo endpoint
+          // and return the user object, which contains the user's information,
+          // similar to the response below.
+          console.log(user);
+        });
+      },
+    );
+  } catch (e) {}
+
+  function handleOnClickSignInWithGoogleButton() {
     // Trigger login with google
     webAuth.authorize({
       connection: 'google-oauth2',
-      // scope: 'read:order write:order',
+      scope: 'openid profile email',
       responseType: 'token',
       redirectUri,
     });

@@ -3,12 +3,8 @@ import { json } from '@remix-run/node';
 import UnauthenticatedHeader from '~/components/UnauthenticatedHeader';
 import CreateAccountForm from '~/components/CreateAccountForm';
 import { useLoaderData } from '@remix-run/react';
-import { authenticator } from '~/services/auth.server';
 
-export let loader: LoaderFunction = async ({ request }) => {
-  let user = await authenticator.isAuthenticated(request);
-  console.log('Is user authenticated', user);
-
+export let loader: LoaderFunction = ({ request }) => {
   return json({
     ENV: {
       auth0Domain: process.env.AUTH0_DOMAIN,

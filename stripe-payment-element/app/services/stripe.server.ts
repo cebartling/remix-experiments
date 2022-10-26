@@ -65,3 +65,19 @@ export const createSubscription = async ({
     expand: ['latest_invoice.payment_intent']
   });
 };
+
+export interface ResolvePromoCodeParams {
+  promoCode: string;
+}
+
+export const resolvePromoCode = ({
+  promoCode
+}: ResolvePromoCodeParams): Stripe.ApiListPromise<Stripe.PromotionCode> => {
+  const stripeConfig = {} as Stripe.StripeConfig;
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
+  const apiListPromise = stripe.promotionCodes.list({
+    code: promoCode,
+    limit: 1
+  });
+  return apiListPromise;
+};

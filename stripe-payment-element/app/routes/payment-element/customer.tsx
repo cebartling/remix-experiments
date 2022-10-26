@@ -14,7 +14,10 @@ import type {
 } from '~/services/stripe.server';
 import { createCustomer, createSubscription } from '~/services/stripe.server';
 import { getSessionData, sessionCookie } from '~/cookies';
-import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE } from '~/route-constants';
+import {
+  ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE,
+  ROUTE_PAYMENT_ELEMENT_PROMO_CODE
+} from '~/route-constants';
 
 export const validator = withZod(
   z.object({
@@ -43,7 +46,7 @@ export default function Customer() {
         <FormInput name="city" label="City" />
         <FormInput name="state" label="State" />
         <FormInput name="postalCode" label="Postal code" />
-        <div className="customer-form-button-container">
+        <div className="form-button-container">
           <SubmitButton />
         </div>
       </ValidatedForm>
@@ -80,7 +83,7 @@ export const action: ActionFunction = async ({ request }) => {
   sessionData.postalCode = postalCode;
   sessionData.stripeSubscriptionId = stripeSubscription.id;
 
-  return redirect(ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE, {
+  return redirect(ROUTE_PAYMENT_ELEMENT_PROMO_CODE, {
     headers: {
       'Set-Cookie': await sessionCookie.serialize(sessionData)
     }

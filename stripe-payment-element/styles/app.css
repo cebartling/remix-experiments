@@ -50,7 +50,7 @@
         @apply text-sm text-red-600 font-medium mt-1;
     }
 
-    .customer-form-button-container {
+    .form-button-container {
         @apply flex justify-center;
     }
 

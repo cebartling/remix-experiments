@@ -2,6 +2,9 @@ import type { CookieOptions } from '@remix-run/node';
 import { createCookie } from '@remix-run/node';
 
 export interface SessionData {
+  stripeCouponPercentOff: number;
+  stripeCouponId: string | null;
+  stripePromotionCodeId: string | null;
   stripeSubscriptionId: string;
   stripeClientSecret: string;
   postalCode: string;

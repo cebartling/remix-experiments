@@ -82,6 +82,8 @@ export const action: ActionFunction = async ({ request }) => {
   sessionData.stripeClientSecret = paymentIntent?.client_secret!;
   sessionData.postalCode = postalCode;
   sessionData.stripeSubscriptionId = stripeSubscription.id;
+  sessionData.stripePriceId = process.env.STRIPE_STANDARD_SERVICE_PRICE_ID!;
+  sessionData.stripeCustomerId = stripeCustomer.id;
 
   return redirect(ROUTE_PAYMENT_ELEMENT_PROMO_CODE, {
     headers: {

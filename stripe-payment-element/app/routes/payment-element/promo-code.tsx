@@ -9,8 +9,11 @@ import { SubmitButton } from '~/components/SubmitButton';
 import type { ActionFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import { getSessionData, sessionCookie } from '~/cookies';
-import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE } from '~/route-constants';
-import { resolvePromoCode } from '~/services/stripe.server';
+import { ROUTE_PAYMENT_ELEMENT_CHECKOUT_SUMMARY } from '~/route-constants';
+import {
+  resolvePromoCode,
+  updateSubscriptionWithCoupon
+} from '~/services/stripe.server';
 
 export const validator = withZod(
   z.object({
@@ -44,6 +47,10 @@ export const action: ActionFunction = async ({ request }) => {
     const promotionCodes = await resolvePromoCode({ promoCode });
     if (promotionCodes.data?.length === 1) {
       const promotionCode = promotionCodes.data[0];
+      const updatedSubscription = await updateSubscriptionWithCoupon({
+        subscriptionId: sessionData.stripeSubscriptionId,
+        couponId: promotionCode.coupon.id
+      });
       sessionData.stripePromotionCodeId = promotionCode.id;
       sessionData.stripeCouponId = promotionCode.coupon.id;
       sessionData.stripeCouponPercentOff = promotionCode.coupon.percent_off
@@ -58,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
   }
 
-  return redirect(ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE, {
+  return redirect(ROUTE_PAYMENT_ELEMENT_CHECKOUT_SUMMARY, {
     headers: {
       'Set-Cookie': await sessionCookie.serialize(sessionData)
     }

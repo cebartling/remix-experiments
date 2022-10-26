@@ -640,6 +640,14 @@ video {
   margin-top: 1rem;
 }
 
+.table {
+  display: table;
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;

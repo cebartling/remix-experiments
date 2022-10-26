@@ -81,3 +81,25 @@ export const resolvePromoCode = ({
   });
   return apiListPromise;
 };
+
+export const getPrice = async (id: string) => {
+  const stripeConfig = {} as Stripe.StripeConfig;
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
+  return await stripe.prices.retrieve(id);
+};
+
+export interface UpdateSubscriptionWithCouponParams {
+  subscriptionId: string;
+  couponId: string;
+}
+
+export const updateSubscriptionWithCoupon = async ({
+  subscriptionId,
+  couponId
+}: UpdateSubscriptionWithCouponParams) => {
+  const stripeConfig = {} as Stripe.StripeConfig;
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
+  return await stripe.subscriptions.update(subscriptionId, {
+    coupon: couponId
+  } as Stripe.SubscriptionUpdateParams);
+};

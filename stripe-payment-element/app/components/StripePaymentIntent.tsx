@@ -21,7 +21,7 @@ export default function StripePaymentIntent({
       .then(({ paymentIntent }) => {
         switch (paymentIntent?.status) {
           case 'succeeded':
-            setMessage('Success! Your payment details has been saved.');
+            setMessage('Success! Your subscription has been started.');
             break;
 
           case 'processing':

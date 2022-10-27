@@ -5,7 +5,16 @@ import { getSessionData, sessionCookie } from '~/cookies';
 import { ROUTE_PAYMENT_ELEMENT_PAYMENT_CAPTURE } from '~/route-constants';
 import { getPrice } from '~/services/stripe.server';
 import { Form, useLoaderData } from '@remix-run/react';
-import { SubmitButton } from '~/components/SubmitButton';
+
+function renderCents(amount: number): string {
+  return amount < 10 ? `0${amount}` : `${amount}`;
+}
+
+function renderCurrency(amount: number): string {
+  const dollars = Math.floor(amount / 100);
+  const cents = amount % 100;
+  return `${dollars}.${renderCents(cents)}`;
+}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const sessionData = await getSessionData(request);
@@ -34,25 +43,25 @@ export default function CheckoutSummary() {
     <>
       <Heading text="Checkout Summary" />
       <div className="mt-2">
-        <table className="table-fixed">
+        <table className="table-fixed fixed-width">
           <thead>
             <tr>
-              <th>Description</th>
-              <th>Amount</th>
+              <th className="text-left">Description</th>
+              <th className="text-right">Amount</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Initial price</td>
-              <td>{initialPrice}</td>
+              <td className="text-right">${renderCurrency(initialPrice)}</td>
             </tr>
             <tr>
               <td>Discount</td>
-              <td>{discount}</td>
+              <td className="text-right">${renderCurrency(discount)}</td>
             </tr>
             <tr>
               <td>First month price</td>
-              <td>{discountedPrice}</td>
+              <td className="text-right">${renderCurrency(discountedPrice)}</td>
             </tr>
           </tbody>
         </table>

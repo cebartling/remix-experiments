@@ -42,6 +42,9 @@ export const action: ActionFunction = async ({ request }) => {
   const validatedFormData = await validator.validate(await request.formData());
   if (validatedFormData.error) return validationError(validatedFormData.error);
   const { promoCode } = validatedFormData.data;
+  sessionData.stripePromotionCodeId = null;
+  sessionData.stripeCouponId = null;
+  sessionData.stripeCouponPercentOff = 0;
 
   if (promoCode) {
     const promotionCodes = await resolvePromoCode({ promoCode });

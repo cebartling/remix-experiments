@@ -44,7 +44,6 @@ export default function StripePaymentCapture({
         return_url: paymentCatureStatusUrl
       }
     });
-    console.log('====> Handle submit', error);
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -90,7 +89,7 @@ export default function StripePaymentCapture({
             id="submit"
             className="primary-button"
           >
-            {isLoading ? 'Submitting payment information...' : 'Submit'}
+            {isLoading ? 'Submitting...' : 'Submit'}
           </button>
         </div>
         <div className="error-message">

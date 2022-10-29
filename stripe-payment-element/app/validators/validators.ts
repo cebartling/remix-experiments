@@ -14,3 +14,9 @@ export const customerValidator = withZod(
     state: z.string().min(1, { message: 'State is required' })
   })
 );
+
+export const promoCodeValidator = withZod(
+  z.object({
+    promoCode: z.string().optional()
+  })
+);

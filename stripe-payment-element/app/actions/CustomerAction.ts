@@ -9,7 +9,7 @@ import type {
 import { createCustomer, createSubscription } from '~/services/stripe.server';
 import type Stripe from 'stripe';
 import { ROUTE_PAYMENT_ELEMENT_PROMO_CODE } from '~/route-constants';
-import { customerValidator } from '~/validators/CustomerValidator';
+import { customerValidator } from '~/validators/validators';
 
 const customerAction: ActionFunction = async ({ request }) => {
   const sessionData = await getSessionData(request);

@@ -5,7 +5,7 @@ import { FormInput } from '~/components/FormInput';
 import { SubmitButton } from '~/components/SubmitButton';
 import { Heading } from '~/components/Heading';
 import customerAction from '~/actions/CustomerAction';
-import { customerValidator } from '~/validators/CustomerValidator';
+import { customerValidator } from '~/validators/validators';
 
 export default function Customer() {
   const data = useActionData();

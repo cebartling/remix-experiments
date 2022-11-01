@@ -28,8 +28,8 @@ const customerActionFunction: ActionFunction = async ({ request }) => {
   // // Create an incomplete subscription
   // const stripeSubscription = await createSubscription({
   //   stripeCustomerId: stripeCustomer.id,
-  //   stripePriceId: process.env.STRIPE_STANDARD_SERVICE_PRICE_ID
-  // } as CreateSubscriptionParams);
+  //   stripePriceId: process.env.STRIPE_STANDARD_SERVICE_PRICE_ID!
+  // });
   // const latestInvoice = stripeSubscription.latest_invoice as Stripe.Invoice;
   // const paymentIntent = latestInvoice?.payment_intent as Stripe.PaymentIntent;
   // sessionData.stripeClientSecret = paymentIntent?.client_secret!;

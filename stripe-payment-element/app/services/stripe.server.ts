@@ -42,15 +42,18 @@ export const createCustomer = async ({
 
 export const createSubscription = async ({
   stripeCustomerId,
-  stripePriceId
+  stripePriceId,
+  stripeCouponId
 }: {
   stripeCustomerId: string;
   stripePriceId: string;
+  stripeCouponId?: string;
 }) => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
   return await stripe.subscriptions.create({
     customer: stripeCustomerId,
+    coupon: stripeCouponId,
     items: [
       {
         price: stripePriceId

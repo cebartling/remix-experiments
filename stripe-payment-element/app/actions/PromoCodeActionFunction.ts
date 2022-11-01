@@ -4,11 +4,7 @@ import { getSessionData, sessionCookie } from '~/cookies';
 import { promoCodeValidator } from '~/validators/validators';
 import type { ValidatorError } from 'remix-validated-form';
 import { validationError } from 'remix-validated-form';
-import {
-  createSubscription,
-  resolvePromoCode,
-  updateCustomerWithCoupon
-} from '~/services/stripe.server';
+import { createSubscription, resolvePromoCode } from '~/services/stripe.server';
 import { ROUTE_PAYMENT_ELEMENT_CHECKOUT_SUMMARY } from '~/route-constants';
 import type Stripe from 'stripe';
 
@@ -27,24 +23,17 @@ const promoCodeActionFunction: ActionFunction = async ({ request }) => {
     const promotionCodes = await resolvePromoCode({ promoCode });
     if (promotionCodes.data?.length === 1) {
       const promotionCode = promotionCodes.data[0];
-      const updatedCustomer = await updateCustomerWithCoupon({
-        stripeCustomerId: sessionData.stripeCustomerId,
-        stripeCouponId: promotionCode.coupon.id
-      });
       // Create an incomplete subscription
       const stripeSubscription = await createSubscription({
         stripeCustomerId: sessionData.stripeCustomerId,
-        stripePriceId: process.env.STRIPE_STANDARD_SERVICE_PRICE_ID!
+        stripePriceId: process.env.STRIPE_STANDARD_SERVICE_PRICE_ID!,
+        stripeCouponId: promotionCode.coupon.id
       });
       const latestInvoice = stripeSubscription.latest_invoice as Stripe.Invoice;
       const paymentIntent =
         latestInvoice?.payment_intent as Stripe.PaymentIntent;
       sessionData.stripeClientSecret = paymentIntent?.client_secret!;
       sessionData.stripeSubscriptionId = stripeSubscription.id;
-      // const updatedSubscription = await updateSubscriptionWithCoupon({
-      //   subscriptionId: sessionData.stripeSubscriptionId,
-      //   couponId: promotionCode.coupon.id
-      // });
       sessionData.stripePromotionCodeId = promotionCode.id;
       sessionData.stripeCouponId = promotionCode.coupon.id;
       sessionData.stripeCouponPercentOff = promotionCode.coupon.percent_off

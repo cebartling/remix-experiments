@@ -1,14 +1,5 @@
 import Stripe from 'stripe';
 
-export interface CreateCustomerParams {
-  email: string;
-  name: string;
-  city: string;
-  addressLine1: string;
-  postalCode: string;
-  state: string;
-}
-
 export const createCustomer = async ({
   name,
   email,
@@ -16,7 +7,14 @@ export const createCustomer = async ({
   addressLine1,
   state,
   postalCode
-}: CreateCustomerParams) => {
+}: {
+  email: string;
+  name: string;
+  city: string;
+  addressLine1: string;
+  postalCode: string;
+  state: string;
+}) => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
   return await stripe.customers.create({
@@ -42,19 +40,20 @@ export const createCustomer = async ({
   } as Stripe.CustomerCreateParams);
 };
 
-export interface CreateSubscriptionParams {
-  stripeCustomerId: string;
-  stripePriceId: string;
-}
-
 export const createSubscription = async ({
   stripeCustomerId,
-  stripePriceId
-}: CreateSubscriptionParams) => {
+  stripePriceId,
+  stripeCouponId
+}: {
+  stripeCustomerId: string;
+  stripePriceId: string;
+  stripeCouponId?: string;
+}) => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
   return await stripe.subscriptions.create({
     customer: stripeCustomerId,
+    coupon: stripeCouponId,
     items: [
       {
         price: stripePriceId
@@ -66,13 +65,11 @@ export const createSubscription = async ({
   });
 };
 
-export interface ResolvePromoCodeParams {
-  promoCode: string;
-}
-
 export const resolvePromoCode = ({
   promoCode
-}: ResolvePromoCodeParams): Stripe.ApiListPromise<Stripe.PromotionCode> => {
+}: {
+  promoCode: string;
+}): Stripe.ApiListPromise<Stripe.PromotionCode> => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
   const apiListPromise = stripe.promotionCodes.list({
@@ -88,18 +85,30 @@ export const getPrice = async (id: string) => {
   return await stripe.prices.retrieve(id);
 };
 
-export interface UpdateSubscriptionWithCouponParams {
-  subscriptionId: string;
-  couponId: string;
-}
-
 export const updateSubscriptionWithCoupon = async ({
   subscriptionId,
   couponId
-}: UpdateSubscriptionWithCouponParams) => {
+}: {
+  subscriptionId: string;
+  couponId: string;
+}) => {
   const stripeConfig = {} as Stripe.StripeConfig;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
   return await stripe.subscriptions.update(subscriptionId, {
     coupon: couponId
   } as Stripe.SubscriptionUpdateParams);
+};
+
+export const updateCustomerWithCoupon = async ({
+  stripeCustomerId,
+  stripeCouponId
+}: {
+  stripeCustomerId: string;
+  stripeCouponId: string;
+}) => {
+  const stripeConfig = {} as Stripe.StripeConfig;
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, stripeConfig);
+  return await stripe.customers.update(stripeCustomerId, {
+    coupon: stripeCouponId
+  } as Stripe.CustomerUpdateParams);
 };

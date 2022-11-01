@@ -10,7 +10,7 @@ import {
 } from '~/services/stripe.server';
 import { ROUTE_PAYMENT_ELEMENT_CHECKOUT_SUMMARY } from '~/route-constants';
 
-const promoCodeAction: ActionFunction = async ({ request }) => {
+const promoCodeActionFunction: ActionFunction = async ({ request }) => {
   const sessionData = await getSessionData(request);
   const validatedFormData = await promoCodeValidator.validate(
     await request.formData()
@@ -50,4 +50,4 @@ const promoCodeAction: ActionFunction = async ({ request }) => {
   });
 };
 
-export default promoCodeAction;
+export default promoCodeActionFunction;

@@ -4,8 +4,10 @@ import { ValidatedForm } from 'remix-validated-form';
 import { FormInput } from '~/components/FormInput';
 import { SubmitButton } from '~/components/SubmitButton';
 import { Heading } from '~/components/Heading';
-import customerAction from '~/actions/CustomerAction';
+import customerActionFunction from '~/actions/CustomerActionFunction';
 import { customerValidator } from '~/validators/validators';
+
+export const action: ActionFunction = customerActionFunction;
 
 export default function Customer() {
   const data = useActionData();
@@ -31,5 +33,3 @@ export default function Customer() {
     </>
   );
 }
-
-export const action: ActionFunction = customerAction;

@@ -11,7 +11,7 @@ import type Stripe from 'stripe';
 import { ROUTE_PAYMENT_ELEMENT_PROMO_CODE } from '~/route-constants';
 import { customerValidator } from '~/validators/validators';
 
-const customerAction: ActionFunction = async ({ request }) => {
+const customerActionFunction: ActionFunction = async ({ request }) => {
   const sessionData = await getSessionData(request);
   const validatedFormData = await customerValidator.validate(
     await request.formData()
@@ -51,4 +51,4 @@ const customerAction: ActionFunction = async ({ request }) => {
   });
 };
 
-export default customerAction;
+export default customerActionFunction;

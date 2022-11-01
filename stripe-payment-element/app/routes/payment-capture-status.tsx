@@ -1,26 +1,12 @@
 import type { LoaderFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
 import { Heading } from '~/components/Heading';
 import { Elements } from '@stripe/react-stripe-js';
 import { useLoaderData } from '@remix-run/react';
 import StripePaymentIntent from '~/components/StripePaymentIntent';
 import { loadStripe } from '@stripe/stripe-js';
+import paymentCaptureStatusLoaderFunction from '~/loaders/PaymentCaptureStatusLoaderFunction';
 
-export const loader: LoaderFunction = async ({ request }) => {
-  // Retrieve the "setup_intent_client_secret" query parameter appended to
-  // your return_url by Stripe.js
-  const url = new URL(request.url);
-  const stripePaymentIntentClientSecret = url.searchParams.get(
-    'payment_intent_client_secret'
-  );
-
-  return json({
-    ENV: {
-      STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY
-    },
-    stripePaymentIntentClientSecret
-  });
-};
+export const loader: LoaderFunction = paymentCaptureStatusLoaderFunction;
 
 export default function PaymentCaptureStatus() {
   const { ENV, stripePaymentIntentClientSecret } = useLoaderData();

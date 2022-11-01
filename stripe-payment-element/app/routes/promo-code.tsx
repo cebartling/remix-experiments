@@ -5,7 +5,9 @@ import { FormInput } from '~/components/FormInput';
 import { SubmitButton } from '~/components/SubmitButton';
 import type { ActionFunction } from '@remix-run/node';
 import { promoCodeValidator } from '~/validators/validators';
-import promoCodeAction from '~/actions/PromoCodeAction';
+import promoCodeActionFunction from '~/actions/PromoCodeActionFunction';
+
+export const action: ActionFunction = promoCodeActionFunction;
 
 export default function PromoCode() {
   const data = useActionData();
@@ -26,5 +28,3 @@ export default function PromoCode() {
     </>
   );
 }
-
-export const action: ActionFunction = promoCodeAction;

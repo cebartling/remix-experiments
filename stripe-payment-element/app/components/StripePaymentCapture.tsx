@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type {
   DefaultValuesOption,
   FieldsOption,
+  PaymentWalletsOption,
   StripePaymentElementOptions
 } from '@stripe/stripe-js';
 import {
@@ -70,8 +71,11 @@ export default function StripePaymentCapture({
         name: 'auto',
         address: { postalCode: 'auto', country: 'never' }
       }
-    } as FieldsOption
-    // wallets: { applePay: 'auto', googlePay: 'auto' } as WalletsOption
+    } as FieldsOption,
+    wallets: {
+      applePay: 'auto',
+      googlePay: 'auto'
+    } as PaymentWalletsOption
   } as StripePaymentElementOptions;
 
   return (

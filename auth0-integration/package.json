@@ -37,7 +37,7 @@
     "@types/auth0-js": "^9.14.6",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
-    "autoprefixer": "^10.4.12",
+    "autoprefixer": "^10.4.13",
     "concurrently": "^7.4.0",
     "eslint": "^8.26.0",
     "json-server": "^0.17.0",

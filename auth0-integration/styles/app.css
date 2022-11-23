@@ -2,10 +2,123 @@
 @tailwind components;
 @tailwind utilities;
 
-.main-container {
-    @apply flex flex-col;
+@layer base {
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    aside,
+    canvas,
+    details,
+    embed,
+    figure,
+    figcaption,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    output,
+    ruby,
+    section,
+    summary,
+    time,
+    mark,
+    audio,
+    video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: baseline;
+    }
 }
 
-.sign-into-google-button {
-    @apply ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-indigo-700;
+@layer components {
+    .main-container {
+        @apply flex flex-col;
+    }
+
+    .sign-into-google-button {
+        @apply ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-indigo-700;
+    }
+
+    .sign-up-with-google-button-container {
+        @apply h-[40px] bg-white rounded-[3px] hover:bg-gray-200 cursor-pointer flex flex-row justify-center;
+        border: #dee0e2 1px solid;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .sign-up-with-google-button {
+        @apply w-[190px] flex flex-row align-middle;
+    }
+
+    .sign-up-with-google-button-icon {
+        @apply h-[38px] w-[38px];
+    }
+
+    .sign-up-with-google-button-text {
+        color: rgb(51 51 51);
+        font-family: museo-sans, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+    }
 }
+

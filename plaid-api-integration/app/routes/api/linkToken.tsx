@@ -23,8 +23,8 @@ export const action: ActionFunction = async function ({
       // This should correspond to a unique id for the current user.
       client_user_id: 'user-id'
     },
-    client_name: 'Plaid Quickstart',
-    products: process.env.PLAID_PRODUCTS,
+    client_name: process.env.PLAID_CLIENT_NAME,
+    products: ['auth', 'transactions'],
     country_codes: ['US', 'CA'],
     language: 'en'
   } as LinkTokenCreateRequest;

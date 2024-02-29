@@ -8,10 +8,10 @@ export const links: LinksFunction = () => [
 ];
 
 export const meta: MetaFunction = () => [
+    {title: "React hydrateRoot and remix-island demo"},
+    {name: "description", content: "React hydrateRoot and remix-island demo"},
     {charset: 'utf-8'},
     {viewport: 'width=device-width,initial-scale=1'},
-    {title: "Remix Starter"},
-    {description: "Welcome to remix!"},
 ];
 
 export const Head = createHead(() => (
